@@ -6,6 +6,11 @@ from .model_loader import SentimentPipelineLoader
 router = APIRouter()
 sentiment_pipeline_loader = SentimentPipelineLoader()  # Singleton loader
 
+@router.get("/health")
+async def health_check():
+    # Lightweight check for task
+    return {"status": "healthy"}
+
 @router.post("/analyze_sentiment", response_model=SentimentResponse)
 def analyze_sentiment(request: SentimentRequest):
     try:
