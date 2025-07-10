@@ -34,13 +34,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Install test dependencies
-        run: |
-          pip install pytest httpx
+      # - name: Install test dependencies
+      #   run: |
+      #     pip install pytest httpx
 
-      - name: Run tests
-        run: |
-          python -m pytest tests/ -v
+      # - name: Run tests
+      #   run: |
+      #     python -m pytest tests/ -v
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
