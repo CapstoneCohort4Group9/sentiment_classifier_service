@@ -1,4 +1,4 @@
-name: Build Test and Push Docker image to ECR
+name: Build Test and Push Sentiment API to ECR
 
 on:
   push:
@@ -66,24 +66,24 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         run: |
-          docker run -d -p 8085:8085 \
+          docker run -d -p 8095:8095 \
             --name test-container $ECR_REGISTRY/$ECR_REPOSITORY
-          
+
             
           # Wait for container to start and model to load
-          sleep 45
-          
+          sleep 60
+
           # Show container logs for debugging
           docker logs test-container
-          
+
           # Test health endpoint
           docker exec test-container curl -f http://localhost:8095/health || exit 1
-          
+
           # Test sentiment analysis endpoint
           docker exec test-container curl -f -X POST http://localhost:8095/analyze_sentiment \
             -H "Content-Type: application/json" \
             -d '{"text": "This is a great day!"}' || exit 1
-          
+
           # Cleanup
           docker stop test-container
           docker rm test-container
