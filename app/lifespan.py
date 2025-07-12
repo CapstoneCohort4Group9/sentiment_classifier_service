@@ -18,7 +18,7 @@ async def lifespan(app: FastAPI):
     Handles startup and shutdown events.
     """
     # Startup
-    global model_loaded, model_load_error
+    global model_loaded, model_load_error  # Move global declaration to the top
     logger.info("🚀 Starting application lifespan - model preloading...")
     startup_start = time.time()
     
@@ -55,7 +55,6 @@ async def lifespan(app: FastAPI):
         logger.info("🧹 Performing cleanup...")
         
         # Reset global state
-        global model_loaded, model_load_error
         model_loaded = False
         model_load_error = None
         
